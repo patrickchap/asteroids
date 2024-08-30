@@ -3,6 +3,7 @@ from asteroidfield import AsteroidField
 from constants import *
 from player import Player
 from asteroid import Asteroid
+from shot import Shot
 
 def main():
     print("Starting asteroids!")
@@ -38,12 +39,21 @@ def main():
         for u in updatable:
             u.update(dt)
 
+
         for d in drawable:
             d.draw(screen)
 
         for a in Asteroid.containers:
             a.update(dt)
             a.draw(screen)
+            if player.isCollided(a) and a.position != player.position:
+                print("Player collided with asteroid!")
+                return
+            for s in Shot.containers:
+                if s.isCollided(a):
+                    print("Shot collided with asteroid!")
+                    s.kill()
+                    a.destory()
     
         pygame.display.flip()
 

@@ -11,6 +11,7 @@ class CircleShape(pygame.sprite.Sprite):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.radius = radius
+        self.name = ""
 
     def draw(self, screen):
         # must override
@@ -19,3 +20,10 @@ class CircleShape(pygame.sprite.Sprite):
     def update(self, dt):
         # must override
         pass
+
+    def isCollided(self, circle):
+        if self.position.distance_to(circle.position) < self.radius + circle.radius:
+            if self.name == "shot" and circle.name == "asteroid":
+                return True
+            if self.name == "player" and circle.name == "asteroid":
+                return True
